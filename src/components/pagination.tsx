@@ -5,7 +5,6 @@ import {
   ChevronsRight,
 } from 'lucide-react'
 
-import { useSearchParams } from 'react-router-dom'
 import { Button } from './ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger } from './ui/select'
 
@@ -15,52 +14,10 @@ interface PaginationProps {
   page: number
 }
 
-export function Pagination({ items, page, pages }: PaginationProps) {
-  const [, setSearchParams] = useSearchParams()
-
-  function firstPage() {
-    setSearchParams(params => {
-      params.set('page', '1')
-
-      return params
-    })
-  }
-
-  function previousPage() {
-    if (page - 1 <= 0) {
-      return
-    }
-
-    setSearchParams(params => {
-      params.set('page', String(page - 1))
-
-      return params
-    })
-  }
-
-  function nextPage() {
-    if (page + 1 > pages) {
-      return
-    }
-
-    setSearchParams(params => {
-      params.set('page', String(page + 1))
-
-      return params
-    })
-  }
-
-  function lastPage() {
-    setSearchParams(params => {
-      params.set('page', String(pages))
-
-      return params
-    })
-  }
-
+export function Pagination({items, pages, page}: PaginationProps) {
   return (
     <div className="flex text-sm items-center justify-between text-zinc-500">
-      <span>Showing 10 of {items} items</span>
+      <span>Showing 10 of { items } items</span>
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-2">
           <span>Rows per page</span>
@@ -75,22 +32,21 @@ export function Pagination({ items, page, pages }: PaginationProps) {
           </Select>
         </div>
 
-        <span>Page {page} of {pages}</span>
-
+        <span>Page { page } of { pages }</span>
         <div className="space-x-1.5">
-          <Button onClick={firstPage} size="icon" disabled={page - 1 <= 0}>
+          <Button size="icon" disabled>
             <ChevronsLeft className="size-4" />
             <span className="sr-only">First page</span>
           </Button>
-          <Button onClick={previousPage} size="icon" disabled={page - 1 <= 0}>
+          <Button size="icon" disabled>
             <ChevronLeft className="size-4" />
             <span className="sr-only">Previous page</span>
           </Button>
-          <Button onClick={nextPage} size="icon" disabled={page + 1 > pages}>
+          <Button size="icon">
             <ChevronRight className="size-4" />
             <span className="sr-only">Next page</span>
           </Button>
-          <Button onClick={lastPage} size="icon" disabled={page + 1 > pages}>
+          <Button size="icon">
             <ChevronsRight className="size-4" />
             <span className="sr-only">Last page</span>
           </Button>
